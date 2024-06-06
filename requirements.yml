@@ -1,0 +1,11 @@
+name: abbottabad_compound_material
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  - streamlit
+  - pandas
+  - plotly
+  - pillow
+  - requests
+  - pyinstaller
