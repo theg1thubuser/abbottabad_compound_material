@@ -9,7 +9,7 @@ st.set_page_config(page_title="Image Classification Results")
 
 # base_directory
 pages_directory = Path.cwd()
-base_directory = pages_directory.parent
+base_directory = pages_directory
 
 # Load DataFrame
 df = pd.read_csv(f'{base_directory}/data/df.csv')
