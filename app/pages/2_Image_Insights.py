@@ -41,7 +41,7 @@ with st.expander("Click here for more information on using the date filter and m
 
 # base_directory
 pages_directory = Path.cwd()
-base_directory = pages_directory.parent
+base_directory = pages_directory
 
 # Load and filter DataFrame
 df_data = pd.read_csv(f'{base_directory}/data/df.csv')
