@@ -2,6 +2,8 @@
 
 Welcome to the interactive exploration of the Abbottabad Compound Material, a collection of images seized by the CIA during the 2011 raid on Osama bin Laden's compound in Pakistan. This app provides a unique window into this historical dataset, allowing you to browse and filter images interactively.
 
+**Disclaimer**: The authors are not affiliated, associated, authorized, endorsed by, or in any way officially connected with any of the displayed or mentioned persons, organizations, or states. All views and opinions expressed do not reflect the personal views or opinions of the authors.
+
 ## Overview
 
 This application aims to aid in the analysis and understanding of the images found in the Abbottabad compound. It leverages OpenAI's CLIP model to classify images based on predefined categories and provides tools to filter images by classification scores, dates, and camera metadata.
@@ -23,7 +25,12 @@ This application aims to aid in the analysis and understanding of the images fou
 ### Important Notes
 
 - **Content Warning**: The material may contain content that is offensive or emotionally disturbing.
-- **Disclaimer**: The authors are not affiliated, associated, authorized, endorsed by, or in any way officially connected with any of the displayed or mentioned persons, organizations, or states. All views and opinions expressed do not reflect the personal views or opinions of the authors.
+- All images on this website are featured in the November 2017 Release of the Abbottabad Compound Material. [CIA library with all material](https://www.cia.gov/library/abbottabad-compound/index.html) (last accessed: 6 Jun 24)
+    
+    __Warning__
+
+- Before you start exploring, please note that the material in this file collection may contain content that is offensive and/or emotionally disturbing. This material may not be suitable for all ages. Please view it with discretion.
+- Prior to accessing this file collection, please understand that this material was seized from a terrorist organization by the US Central Intelligence Agency.
 
 ### Access the App
 
