@@ -141,7 +141,5 @@ with st.spinner("Loading images ..."):
                              use_column_width=True)
             else:
                 column.image(image, caption=f"{file_name} ", use_column_width=True)
-        except KeyError:
-            st.error(f"Image not found in mapping: {file_name}")
         except Exception as e:
             st.error(f"Error loading image: {e}")
