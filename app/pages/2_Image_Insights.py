@@ -130,7 +130,7 @@ with st.spinner("Loading images ..."):
         try:
             file_name = row['new_file_name']  
             image_url = row['full_url']  
-            response = requests.get(image_url)
+            response = requests.get(image_url, timeout=30)
             image = Image.open(BytesIO(response.content))
             column = columns[idx % num_columns]
             if camera_info_on:

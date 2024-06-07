@@ -71,15 +71,20 @@ with st.spinner("Loading images ..."):
         try:
             file_name = row['new_file_name']  
             image_url = row['full_url']  
-            response = requests.get(image_url)
+            response = requests.get(image_url, timeout=30)
+            response.raise_for_status()
             image = Image.open(BytesIO(response.content))
             column = columns[idx % num_columns]
             column.image(image, caption=f"{file_name} - score: {row[category]:.2f}", 
                          use_column_width=True)
             
-
-        except KeyError:
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Error fetching image from URL: {e}")
+            st.error(f"Error loading image: cannot fetch from URL {image_url}")
+        except KeyError as e:
+            logging.error(f"Image not found in mapping: {file_name}")
             st.error(f"Image not found in mapping: {file_name}")
         except Exception as e:
+            logging.error(f"Error loading image: {e}")
             st.error(f"Error loading image: {e}")
 
