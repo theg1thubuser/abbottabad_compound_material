@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.set_page_config(page_title="obl_files")
+st.set_page_config(page_title="Abbottabad Compound Material")
 
 st.write("# Abbottabad Compound Material")
 
