@@ -22,13 +22,10 @@ This application aims to aid in the analysis and understanding of the images fou
 4. **Filter by Date**: Specify a start and end date to filter images based on capture dates.
 5. **Display Metadata**: Toggle to show camera make, model, and capture date information.
 
-### Important Notes
+### Important Notes - Content Warning
 
-- **Content Warning**: The material may contain content that is offensive or emotionally disturbing.
+- The material may contain content that is offensive or emotionally disturbing.
 - All images on this website are featured in the November 2017 Release of the Abbottabad Compound Material. [CIA library with all material](https://www.cia.gov/library/abbottabad-compound/index.html) (last accessed: 6 Jun 24)
-    
-    __Warning__
-
 - Before you start exploring, please note that the material in this file collection may contain content that is offensive and/or emotionally disturbing. This material may not be suitable for all ages. Please view it with discretion.
 - Prior to accessing this file collection, please understand that this material was seized from a terrorist organization by the US Central Intelligence Agency.
 
