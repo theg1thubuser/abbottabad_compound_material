@@ -19,7 +19,7 @@ st.markdown(
 
     CIA's 1 November 2017 release includes additional al-Qa'ida letters, videos, audio files, and communications, as well as routine family correspondence. As a result, it builds on the ODNI releases that provided material relevant to understanding the plans and workings of terrorist organizations. The material is posted in its original Arabic format and in as close to the original form as possible, modified only so the files cannot be edited.
 
-    All of the material, originally includes audio, document, image, video, and software operating system files and can be found here. [link]
+    All of the material, originally includes audio, document, image, video, and software operating system files and can be found here.
     
     __Copyright Disclaimer__
 
