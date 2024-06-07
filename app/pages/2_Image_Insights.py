@@ -120,6 +120,10 @@ st.plotly_chart(fig, use_container_width=True)
 
 st.subheader(f"Images from {start_date} to {end_date}")
 
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+}
+
 with st.spinner("Loading images ..."):
     st.write(' ')
     # Display images in a grid
@@ -130,7 +134,7 @@ with st.spinner("Loading images ..."):
         try:
             file_name = row['new_file_name']  
             image_url = row['full_url']  
-            response = requests.get(image_url, timeout=30)
+            response = requests.get(image_url, headers=headers, timeout=30)
             image = Image.open(BytesIO(response.content))
             column = columns[idx % num_columns]
             if camera_info_on:
