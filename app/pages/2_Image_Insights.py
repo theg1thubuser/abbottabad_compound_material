@@ -121,10 +121,14 @@ st.plotly_chart(fig, use_container_width=True)
 st.subheader(f"Images from {start_date} to {end_date}")
 
 headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    "Referer": "https://abbottabadcompoundmaterial.streamlit.app/",
+    # "Accept-Encoding": "gzip, deflate, br",
 }
 
 with st.spinner("Loading images ..."):
+    url = "https://www.cia.gov/library/abbottabad-compound/" 
+    session = requests.Session() 
     st.write(' ')
     # Display images in a grid
     num_columns = 3
@@ -133,8 +137,11 @@ with st.spinner("Loading images ..."):
     for idx, row in filtered_df.iterrows():
         try:
             file_name = row['new_file_name']  
-            image_url = row['full_url']  
-            response = requests.get(image_url, headers=headers, timeout=30)
+            image_url = row['full_url'] 
+            session.headers.update(headers) 
+            response = requests.get(image_url, 
+                                    # headers=headers, 
+                                    timeout=30)
             image = Image.open(BytesIO(response.content))
             column = columns[idx % num_columns]
             if camera_info_on:
