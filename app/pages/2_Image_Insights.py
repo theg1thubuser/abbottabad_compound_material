@@ -141,7 +141,8 @@ with st.spinner("Loading images ..."):
             session.headers.update(headers) 
             response = requests.get(image_url, 
                                     # headers=headers, 
-                                    timeout=30)
+                                    timeout=30,
+                                    stream=True)
             image = Image.open(BytesIO(response.content))
             column = columns[idx % num_columns]
             if camera_info_on:

@@ -82,7 +82,8 @@ with st.spinner("Loading images ..."):
             session.headers.update(headers)
             response = session.get(image_url, 
                                 #    headers=headers, 
-                                   timeout=30)
+                                   timeout=30,
+                                    stream=True)
             # response = requests.get(image_url, headers=headers, timeout=30)
             response.raise_for_status()
             image = Image.open(BytesIO(response.content))
