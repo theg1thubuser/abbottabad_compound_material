@@ -62,10 +62,14 @@ filtered_df = df[df[category] >= threshold]
 st.subheader(f"Images for category '{category}' with score above {threshold}")
 
 headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    "Referer": "https://abbottabadcompoundmaterial.streamlit.app/",
+    # "Accept-Encoding": "gzip, deflate, br",
 }
 
 with st.spinner("Loading images ..."):
+    url = "https://www.cia.gov/library/abbottabad-compound/" 
+    session = requests.Session() 
     st.write(' ')
     # Display images in a grid
     num_columns = 3
@@ -75,7 +79,11 @@ with st.spinner("Loading images ..."):
         try:
             file_name = row['new_file_name']  
             image_url = row['full_url']  
-            response = requests.get(image_url, headers=headers, timeout=30)
+            session.headers.update(headers)
+            response = session.get(image_url, 
+                                #    headers=headers, 
+                                   timeout=30)
+            # response = requests.get(image_url, headers=headers, timeout=30)
             response.raise_for_status()
             image = Image.open(BytesIO(response.content))
             column = columns[idx % num_columns]
