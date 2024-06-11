@@ -153,7 +153,7 @@ with st.spinner("Loading images ..."):
             else:
                 column.image(image, caption=f"{file_name} ", use_column_width=True)
         except Exception as e:
-            st.error(f"Error loading image: {e}")
+            st.error(f"Error loading image: {e}, {image_url}")
         except requests.exceptions.RequestException as e:
             # logging.error(f"Error fetching image from URL: {e}")
             st.error(f"Error loading image: cannot fetch from URL {image_url}")
