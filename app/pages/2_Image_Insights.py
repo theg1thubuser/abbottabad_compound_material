@@ -143,16 +143,32 @@ with st.spinner("Loading images ..."):
                                     # headers=headers, 
                                     timeout=30,
                                     stream=True)
-            image = Image.open(BytesIO(response.content))
-            column = columns[idx % num_columns]
-            if camera_info_on:
-                camera_make = '- Camera: ' + str(row['camera_make'])
-                camera_model = str(row['camera_model'])
-                timestamp = '- Date: ' + str(row['timestamp'])
-                column.image(image, caption=f"{file_name} {camera_make} {camera_model if not pd.isnull(row['camera_model']) else ' '} {timestamp}", 
-                             use_column_width=True)
-            else:
-                column.image(image, caption=f"{file_name} ", use_column_width=True)
+            
+            if response.status_code == 200 and response.headers["Content-Type"].startswith("image/"):
+                # with open("image.jpg", "wb") as file:
+                #     for chunk in response.iter_content(1024):
+                #         file.write(chunk)
+
+                # try:
+                #     with Image.open("image.jpg") as img:
+                #         img.verify()
+                #     print("Image is valid.")
+                # except (IOError, SyntaxError) as e:
+                #     print(f"Image is broken: {e}")
+
+                ###
+                image = Image.open(BytesIO(response.content))
+                column = columns[idx % num_columns]
+                if camera_info_on:
+                    camera_make = '- Camera: ' + str(row['camera_make'])
+                    camera_model = str(row['camera_model'])
+                    timestamp = '- Date: ' + str(row['timestamp'])
+                    column.image(image, caption=f"{file_name} {camera_make} {camera_model if not pd.isnull(row['camera_model']) else ' '} {timestamp}", 
+                                use_column_width=True)
+                else:
+                    column.image(image, caption=f"{file_name} ", use_column_width=True)
+                ####
+                
         except Exception as e:
             st.error(f"Error loading image: {e}, {image_url}")
         except requests.exceptions.RequestException as e:
