@@ -38,8 +38,9 @@ df_timestamp = df_data.dropna(subset=['timestamp'])
 df_timestamp.reset_index(inplace=True)
 
 # Ensure that the 'timestamp' column is properly recognized as a datetime object
-df_timestamp['timestamp'] = df_timestamp.to_datetime(df['timestamp'], 
+df_timestamp['timestamp'] = df_timestamp.to_datetime(df_timestamp['timestamp'], 
                                  format='%Y-%m-%d %H:%M:%S', errors='coerce')
+
 # Filter out NaNs from the timestamp column
 df = df_timestamp[df_timestamp['timestamp'].notna()]
 
