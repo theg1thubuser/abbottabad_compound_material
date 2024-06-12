@@ -5,9 +5,7 @@ import plotly.graph_objects as go
 import tempfile
 import requests
 import os 
-
 from streamlit_player import st_player
-
 
 # base_directory
 pages_directory = Path.cwd()
@@ -98,7 +96,7 @@ def download_video(url, output_path):
 
 # Download and display videos
 for url, caption in zip(video_urls, video_captions):
-    video_path = f"{temp_dir}/{url.split('/')[-1]}"
+    video_path = f"{temp_dir}/{url}"
     if download_video(url, video_path):
         st_player(video_path)
         st.write(caption)
