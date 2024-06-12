@@ -5,3 +5,4 @@ pillow
 requests
 pytube
 moviepy
+streamlit_player
