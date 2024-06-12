@@ -34,14 +34,14 @@ def display_video(video_path):
 # Load video data
 df_data = pd.read_csv(f'{base_directory}/data/video_data.csv')
 # Filter out rows with NaN values in  'timestamp'  and reset index
-df = df_data.dropna(subset=['timestamp'])
-df.reset_index(inplace=True)
+df_timestamp = df_data.dropna(subset=['timestamp'])
+df_timestamp.reset_index(inplace=True)
 
 # Ensure that the 'timestamp' column is properly recognized as a datetime object
-df['timestamp'] = pd.to_datetime(df['timestamp'], 
+df_timestamp['timestamp'] = df_timestamp.to_datetime(df['timestamp'], 
                                  format='%Y-%m-%d %H:%M:%S', errors='coerce')
 # Filter out NaNs from the timestamp column
-df = df_data[df_data['timestamp'].notna()]
+df = df_timestamp[df_timestamp['timestamp'].notna()]
 
 # Sidebar user inputs
 st.sidebar.title("Data Filter")
