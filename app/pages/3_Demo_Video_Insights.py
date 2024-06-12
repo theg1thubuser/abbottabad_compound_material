@@ -2,9 +2,6 @@ import streamlit as st
 import pandas as pd
 from pathlib import Path
 import plotly.graph_objects as go
-import requests
-from PIL import Image
-from io import BytesIO
 from pytube import YouTube
 from moviepy.editor import VideoFileClip
 import tempfile
@@ -29,17 +26,17 @@ def download_video(url, output_path):
 # Function to display video in Streamlit app
 def display_video(video_path):
     video = VideoFileClip(video_path)
-    st.video(video)
+    st.video(video_path)
 
 # Load video data
 df_data = pd.read_csv(f'{base_directory}/data/video_data.csv')
-# Filter out rows with NaN values in  'timestamp'  and reset index
+
+# Filter out rows with NaN values in 'timestamp' and reset index
 df_timestamp = df_data.dropna(subset=['timestamp'])
-df_timestamp.reset_index(inplace=True)
+df_timestamp.reset_index(inplace=True, drop=True)
 
 # Ensure that the 'timestamp' column is properly recognized as a datetime object
-df_timestamp['timestamp'] = df_timestamp.to_datetime(df_timestamp['timestamp'], 
-                                 format='%Y-%m-%d %H:%M:%S', errors='coerce')
+df_timestamp['timestamp'] = pd.to_datetime(df_timestamp['timestamp'], format='%Y-%m-%d %H:%M:%S', errors='coerce')
 
 # Filter out NaNs from the timestamp column
 df = df_timestamp[df_timestamp['timestamp'].notna()]
@@ -49,17 +46,17 @@ st.sidebar.title("Data Filter")
 st.sidebar.write("Select a date range to filter videos")
 
 start_date = st.sidebar.date_input("Type or select start date", 
-                                   min_value=df_timestamp['timestamp'].min().date(), 
-                                   max_value=df_timestamp['timestamp'].max().date(),
-                                   value=df_timestamp['timestamp'].min().date())
+                                   min_value=df['timestamp'].min().date(), 
+                                   max_value=df['timestamp'].max().date(),
+                                   value=df['timestamp'].min().date())
 end_date = st.sidebar.date_input("Type or select end date", 
-                                 min_value=df_timestamp['timestamp'].min().date(), 
-                                 max_value=df_timestamp['timestamp'].max().date(),
-                                 value=df_timestamp['timestamp'].max().date())
+                                 min_value=df['timestamp'].min().date(), 
+                                 max_value=df['timestamp'].max().date(),
+                                 value=df['timestamp'].max().date())
 
 # Filter df based on user inputs
-filtered_df = df[(df['timestamp'] >= pd.to_datetime(start_date, format='%Y:%m:%d %H:%M:%S', errors='coerce')) & 
-                 (df['timestamp'] <= pd.to_datetime(end_date, format='%Y:%m:%d %H:%M:%S', errors='coerce'))]
+filtered_df = df[(df['timestamp'] >= pd.to_datetime(start_date)) & 
+                 (df['timestamp'] <= pd.to_datetime(end_date))]
 
 # Group by date and count occurrences
 occurrences = filtered_df['timestamp'].dt.date.value_counts().sort_index()
@@ -67,7 +64,7 @@ occurrences = filtered_df['timestamp'].dt.date.value_counts().sort_index()
 # Create a time series plot using Plotly Graph Objects
 fig = go.Figure(data=[go.Scatter(x=occurrences.index, y=occurrences.values, mode='lines+markers')])
 fig.update_layout(
-    title='Number Of Images Over Selected Time Period',
+    title='Number Of Videos Over Selected Time Period',
     xaxis_title='Date',
     yaxis_title='Count',
     xaxis=dict(tickformat='%Y-%m-%d'),
@@ -75,12 +72,6 @@ fig.update_layout(
 st.plotly_chart(fig, use_container_width=True)
 
 st.subheader(f"Videos from {start_date} to {end_date}")
-
-headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-    "Referer": "https://abbottabadcompoundmaterial.streamlit.app/",
-    # "Accept-Encoding": "gzip, deflate, br",
-}
 
 # Create a list to store video URLs and their corresponding captions
 video_urls = []
@@ -96,7 +87,6 @@ for idx, row in filtered_df.iterrows():
         video_captions.append(video_caption)
 
 # Create a temporary directory to store downloaded videos
-import tempfile
 temp_dir = tempfile.mkdtemp()
 
 # Download and display videos
