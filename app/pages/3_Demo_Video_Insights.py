@@ -71,6 +71,8 @@ fig.update_layout(
 )
 st.plotly_chart(fig, use_container_width=True)
 
+st.write(filtered_df[['new_file_name', 'timestamp', 'full_url']]).sort_values(by='timestamp')
+
 st.subheader(f"Videos from {start_date} to {end_date}")
 
 # Create a list to store video URLs and their corresponding captions
