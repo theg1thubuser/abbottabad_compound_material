@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from pathlib import Path
 import plotly.graph_objects as go
+from streamlit_player import st_player
 from pytube import YouTube
 from moviepy.editor import VideoFileClip
 import tempfile
@@ -71,7 +72,7 @@ fig.update_layout(
 )
 st.plotly_chart(fig, use_container_width=True)
 
-st.write(filtered_df[['new_file_name', 'timestamp', 'full_url']]).sort_values(by='timestamp')
+st.write(filtered_df[['new_file_name', 'timestamp', 'full_url']].sort_values(by='timestamp'))
 
 st.subheader(f"Videos from {start_date} to {end_date}")
 
@@ -95,7 +96,7 @@ temp_dir = tempfile.mkdtemp()
 for url, caption in zip(video_urls, video_captions):
     video_path = f"{temp_dir}/{url.split('/')[-1]}"
     if download_video(url, video_path):
-        display_video(video_path)
+        st_player(video_path)
         st.write(caption)
     else:
         st.error(f"Error downloading or displaying video from URL: {url}")
