@@ -76,7 +76,7 @@ for idx, row in filtered_df.iterrows():
 # Create a temporary directory to store downloaded videos
 temp_dir = tempfile.mkdtemp()
 
-# Function to download and save video from direct URL
+## Function to download and save video from direct URL
 def download_video(url, output_path):
     try:
         response = requests.get(url, stream=True)
@@ -96,9 +96,15 @@ def download_video(url, output_path):
 
 # Download and display videos
 for url, caption in zip(video_urls, video_captions):
-    video_path = f"{temp_dir}/{url}"
+    video_path = f"{temp_dir}/{url.split('/')[-1]}"
+    
+    # Download the video
     if download_video(url, video_path):
-        st_player(video_path)
-        st.write(caption)
+        try:
+            st_player(video_path)
+            st.write(caption)
+        except Exception as e:
+            st.error(f"Error playing video: {e}")
+            st.write(caption)
     else:
         st.error(f"Error downloading or displaying video from URL: {url}")
