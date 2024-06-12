@@ -2,12 +2,8 @@ import streamlit as st
 import pandas as pd
 from pathlib import Path
 import plotly.graph_objects as go
-import tempfile
-import requests
-import os 
-from streamlit_player import st_player
 
-# base_directory
+# Base directory
 pages_directory = Path.cwd()
 base_directory = pages_directory
 
@@ -61,57 +57,13 @@ st.write(filtered_df[['new_file_name', 'timestamp', 'full_url']].sort_values(by=
 
 st.subheader(f"Videos from {start_date} to {end_date}")
 
-# Create a list to store video URLs and their corresponding captions
-video_urls = []
-video_captions = []
-
-# Iterate through the DataFrame to find video URLs
-for idx, row in filtered_df.iterrows():
-    video_url = row['full_url']
-    video_urls.append(video_url)
-    timestamp = '- Date: ' + str(row['timestamp'])
-    video_caption = f"{row['new_file_name']} {timestamp}"
-    video_captions.append(video_caption)
-
-# Create a temporary directory to store downloaded videos
-temp_dir = tempfile.mkdtemp()
-
-## Function to download and save video from direct URL
-def download_video(url, output_path):
-    try:
-        response = requests.get(url, stream=True)
-        if response.status_code == 200:
-            with open(output_path, 'wb') as video_file:
-                for chunk in response.iter_content(chunk_size=1024):
-                    video_file.write(chunk)
-            return True
-        else:
-            raise ValueError(f"Failed to download video: Status code {response.status_code}")
-    except requests.exceptions.RequestException as e:
-        print(f"Error downloading video: {e}")
-        return False
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-        return False
-
 # Display and play videos from URLs
 for idx, row in filtered_df.iterrows():
     video_url = row['full_url']
     st.write(f"{row['new_file_name']} - Date: {row['timestamp']}")
-    st.write(video_url)
-    st.video(video_url)
-
-# # Download and display videos
-# for url, caption in zip(video_urls, video_captions):
-#     video_path = f"{temp_dir}/{url.split('/')[-1]}"
     
-#     # Download the video
-#     if download_video(url, video_path):
-#         try:
-#             st_player(video_path)
-#             st.write(caption)
-#         except Exception as e:
-#             st.error(f"Error playing video: {e}")
-#             st.write(caption)
-#     else:
-#         st.error(f"Error downloading or displaying video from URL: {url}")
+    # Attempt to display the video
+    try:
+        st.video(video_url)
+    except Exception as e:
+        st.write(f"Cannot play video from URL: {video_url}. Error: {e}")
