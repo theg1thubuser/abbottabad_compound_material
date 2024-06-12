@@ -2,10 +2,12 @@ import streamlit as st
 import pandas as pd
 from pathlib import Path
 import plotly.graph_objects as go
-from streamlit_player import st_player
-from pytube import YouTube
-from moviepy.editor import VideoFileClip
 import tempfile
+import requests
+import os 
+
+from streamlit_player import st_player
+
 
 # base_directory
 pages_directory = Path.cwd()
@@ -13,21 +15,6 @@ base_directory = pages_directory
 
 st.set_page_config(page_title="Demo: Video Insights")
 st.title("Video Insights")
-
-# Function to download and save video from URL
-def download_video(url, output_path):
-    try:
-        yt = YouTube(url)
-        yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first().download(output_path)
-        return True
-    except Exception as e:
-        print(f"Error downloading video: {e}")
-        return False
-
-# Function to display video in Streamlit app
-def display_video(video_path):
-    video = VideoFileClip(video_path)
-    st.video(video_path)
 
 # Load video data
 df_data = pd.read_csv(f'{base_directory}/data/video_data.csv')
@@ -82,15 +69,32 @@ video_captions = []
 
 # Iterate through the DataFrame to find video URLs
 for idx, row in filtered_df.iterrows():
-    if 'video' in row['new_file_name'].lower():  
-        video_url = row['full_url']
-        video_urls.append(video_url)
-        timestamp = '- Date: ' + str(row['timestamp'])
-        video_caption = f"{row['new_file_name']} {timestamp}"
-        video_captions.append(video_caption)
+    video_url = row['full_url']
+    video_urls.append(video_url)
+    timestamp = '- Date: ' + str(row['timestamp'])
+    video_caption = f"{row['new_file_name']} {timestamp}"
+    video_captions.append(video_caption)
 
 # Create a temporary directory to store downloaded videos
 temp_dir = tempfile.mkdtemp()
+
+# Function to download and save video from direct URL
+def download_video(url, output_path):
+    try:
+        response = requests.get(url, stream=True)
+        if response.status_code == 200:
+            with open(output_path, 'wb') as video_file:
+                for chunk in response.iter_content(chunk_size=1024):
+                    video_file.write(chunk)
+            return True
+        else:
+            raise ValueError(f"Failed to download video: Status code {response.status_code}")
+    except requests.exceptions.RequestException as e:
+        print(f"Error downloading video: {e}")
+        return False
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return False
 
 # Download and display videos
 for url, caption in zip(video_urls, video_captions):
