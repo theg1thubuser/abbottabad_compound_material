@@ -94,17 +94,23 @@ def download_video(url, output_path):
         print(f"An unexpected error occurred: {e}")
         return False
 
-# Download and display videos
-for url, caption in zip(video_urls, video_captions):
-    video_path = f"{temp_dir}/{url.split('/')[-1]}"
+# Display and play videos from URLs
+for idx, row in filtered_df.iterrows():
+    video_url = row['full_url']
+    st.write(f"{row['new_file_name']} - Date: {row['timestamp']}")
+    st.video(video_url)
+
+# # Download and display videos
+# for url, caption in zip(video_urls, video_captions):
+#     video_path = f"{temp_dir}/{url.split('/')[-1]}"
     
-    # Download the video
-    if download_video(url, video_path):
-        try:
-            st_player(video_path)
-            st.write(caption)
-        except Exception as e:
-            st.error(f"Error playing video: {e}")
-            st.write(caption)
-    else:
-        st.error(f"Error downloading or displaying video from URL: {url}")
+#     # Download the video
+#     if download_video(url, video_path):
+#         try:
+#             st_player(video_path)
+#             st.write(caption)
+#         except Exception as e:
+#             st.error(f"Error playing video: {e}")
+#             st.write(caption)
+#     else:
+#         st.error(f"Error downloading or displaying video from URL: {url}")
