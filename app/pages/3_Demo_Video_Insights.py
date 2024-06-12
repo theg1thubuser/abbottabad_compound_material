@@ -49,13 +49,13 @@ st.sidebar.title("Data Filter")
 st.sidebar.write("Select a date range to filter videos")
 
 start_date = st.sidebar.date_input("Type or select start date", 
-                                   min_value=df['timestamp'].min().date(), 
-                                   max_value=df['timestamp'].max().date(),
-                                   value=df['timestamp'].min().date())
+                                   min_value=df_timestamp['timestamp'].min().date(), 
+                                   max_value=df_timestamp['timestamp'].max().date(),
+                                   value=df_timestamp['timestamp'].min().date())
 end_date = st.sidebar.date_input("Type or select end date", 
-                                 min_value=df['timestamp'].min().date(), 
-                                 max_value=df['timestamp'].max().date(),
-                                 value=df['timestamp'].max().date())
+                                 min_value=df_timestamp['timestamp'].min().date(), 
+                                 max_value=df_timestamp['timestamp'].max().date(),
+                                 value=df_timestamp['timestamp'].max().date())
 
 # Filter df based on user inputs
 filtered_df = df[(df['timestamp'] >= pd.to_datetime(start_date, format='%Y:%m:%d %H:%M:%S', errors='coerce')) & 
