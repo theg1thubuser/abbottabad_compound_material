@@ -98,6 +98,7 @@ def download_video(url, output_path):
 for idx, row in filtered_df.iterrows():
     video_url = row['full_url']
     st.write(f"{row['new_file_name']} - Date: {row['timestamp']}")
+    st.write(video_url)
     st.video(video_url)
 
 # # Download and display videos
