@@ -61,14 +61,30 @@ st.write(filtered_df[['new_file_name', 'timestamp', 'full_url']].sort_values(by=
 display_videos_on  = st.sidebar.checkbox('Display videos for selected time period')
 
 if display_videos_on:
-
+    # Inject Video.js library
+    st.markdown("""
+    <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/7.11.4/video.js"></script>
+    """, unsafe_allow_html=True)
+    
     # Display and play videos from URLs
     for idx, row in filtered_df.iterrows():
         video_url = row['full_url']
         st.write(f"{row['new_file_name']} - Date: {row['timestamp']}")
         
-        # Attempt to display the video
-        try:
-            st.video(video_url)
-        except Exception as e:
-            st.write(f"Cannot play video from URL: {video_url}. Error: {e}")
+        # Video.js player
+        video_html = f"""
+        <video
+            id="my-video-{idx}"
+            class="video-js"
+            controls
+            preload="auto"
+            width="640"
+            height="264"
+            data-setup='{{"aspectRatio":"640:264", "playbackRates": [1, 1.5, 2]}}'
+        >
+            <source src="{video_url}" type="video/3gpp" />
+            Your browser does not support the video tag.
+        </video>
+        """
+        st.markdown(video_html, unsafe_allow_html=True)
