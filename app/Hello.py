@@ -84,7 +84,7 @@ st.write("## Demo Video Insights")
 st.markdown(
     """
 
-    The Compound Material also features a vast video amount of videos. Some of these contain metadata regarding time. Use the demo to explore these files. Some of them can not be played here, but instead need to be downloaded from the CIA. 
+    The Compound Material features a vast amount of video files. Some of these contain metadata regarding time. Use the demo to explore these files. Some of them can not be played here, but instead need to be downloaded from the CIA. 
 
     """)
 
@@ -106,4 +106,4 @@ st.markdown(
 
 st.write(' ')
 st.write(' ')
-st.text("Last edited: 6 Jun 25 by theg1thubuser")
+st.text("Last edited: 17 Jun 25 by theg1thubuser")
