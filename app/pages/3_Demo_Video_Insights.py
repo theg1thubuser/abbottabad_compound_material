@@ -61,30 +61,24 @@ st.write(filtered_df[['new_file_name', 'timestamp', 'full_url']].sort_values(by=
 display_videos_on  = st.sidebar.checkbox('Display videos for selected time period')
 
 if display_videos_on:
-    # Inject Video.js library
-    st.markdown("""
-    <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
-    <script src="https://vjs.zencdn.net/7.11.4/video.js"></script>
-    """, unsafe_allow_html=True)
-    
     # Display and play videos from URLs
     for idx, row in filtered_df.iterrows():
-        video_url = row['full_url']
+        video_url_base = row['full_url']  
         st.write(f"{row['new_file_name']} - Date: {row['timestamp']}")
-        
-        # Video.js player
-        video_html = f"""
-        <video
-            id="my-video-{idx}"
-            class="video-js"
-            controls
-            preload="auto"
-            width="640"
-            height="264"
-            data-setup='{{"aspectRatio":"640:264", "playbackRates": [1, 1.5, 2]}}'
-        >
-            <source src="{video_url}" type="video/3gpp" />
-            Your browser does not support the video tag.
-        </video>
-        """
-        st.markdown(video_html, unsafe_allow_html=True)
+
+        try:
+            # Try displaying the video directly using st.video
+            st.video(video_url_base)
+        except Exception as e:
+            # If st.video fails, fallback to multiple source formats
+            st.write("Attempting to display using alternative formats")
+            video_html = f"""
+            <video width="640" height="264" controls>
+                <source src="{video_url_base}" type="video/mp4">
+                <source src="{video_url_base}" type="video/webm">
+                <source src="{video_url_base}" type="video/ogg">
+                <source src="{video_url_base}" type="video/3gpp">
+                Your browser does not support the video tag.
+            </video>
+            """
+            st.markdown(video_html, unsafe_allow_html=True)
