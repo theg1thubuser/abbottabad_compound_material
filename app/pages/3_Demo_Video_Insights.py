@@ -53,17 +53,18 @@ fig.update_layout(
 )
 st.plotly_chart(fig, use_container_width=True)
 
-st.write(filtered_df[['new_file_name', 'timestamp', 'full_url']].sort_values(by='timestamp'))
-
 st.subheader(f"Videos from {start_date} to {end_date}")
 
-# Display and play videos from URLs
-for idx, row in filtered_df.iterrows():
-    video_url = row['full_url']
-    st.write(f"{row['new_file_name']} - Date: {row['timestamp']}")
+st.write(filtered_df[['new_file_name', 'timestamp', 'full_url']].sort_values(by='timestamp'))
+
+
+# # Display and play videos from URLs
+# for idx, row in filtered_df.iterrows():
+#     video_url = row['full_url']
+#     st.write(f"{row['new_file_name']} - Date: {row['timestamp']}")
     
-    # Attempt to display the video
-    try:
-        st.video(video_url)
-    except Exception as e:
-        st.write(f"Cannot play video from URL: {video_url}. Error: {e}")
+#     # Attempt to display the video
+#     try:
+#         st.video(video_url)
+#     except Exception as e:
+#         st.write(f"Cannot play video from URL: {video_url}. Error: {e}")
