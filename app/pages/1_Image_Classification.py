@@ -34,7 +34,6 @@ with st.expander("Click here for more information on how to use the image filter
     1.	__Select Category__: Choose a keyword category from the sidebar dropdown.
     2.	__Set Threshold__: Adjust the threshold slider to filter images based on the classification score. 
     3.	__View Images__: Browse the grid of images that meet the criteria. Each image displays the file name and its score for the selected category.
-    4.	__Toggle Metadata__: Optionally, toggle the display the get information (if available) regarding time and camera.
 
     Example Use Case
     - __Objective__: Identify images that prominently feature “eyes” with a high degree of confidence.
