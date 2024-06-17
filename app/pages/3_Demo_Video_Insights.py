@@ -63,21 +63,22 @@ display_videos_on  = st.sidebar.checkbox('Display videos for selected time perio
 if display_videos_on:
     # Display and play videos from URLs
     for idx, row in filtered_df.iterrows():
-        video_url_base = row['full_url']  
+        video_url = row['full_url']  
         st.write(f"{row['new_file_name']} - Date: {row['timestamp']}")
+        st.write(f"URL: {video_url}")
 
         try:
             # Try displaying the video directly using st.video
-            st.video(video_url_base)
+            st.video(video_url)
         except Exception as e:
             # If st.video fails, fallback to multiple source formats
             st.write("Attempting to display using alternative formats")
             video_html = f"""
             <video width="640" height="264" controls>
-                <source src="{video_url_base}" type="video/mp4">
-                <source src="{video_url_base}" type="video/webm">
-                <source src="{video_url_base}" type="video/ogg">
-                <source src="{video_url_base}" type="video/3gpp">
+                <source src="{video_url}" type="video/mp4">
+                <source src="{video_url}" type="video/webm">
+                <source src="{video_url}" type="video/ogg">
+                <source src="{video_url}" type="video/3gpp">
                 Your browser does not support the video tag.
             </video>
             """
