@@ -51,7 +51,7 @@ with st.expander("Click here for more information on how to use the image filter
 with st.sidebar.title("Image Filter"):
     st.write("Select a category and a threshold to filter images")
 
-sorted_columns = sorted(df.columns[3:47])
+sorted_columns = sorted(df.columns[15:])
 category = st.sidebar.selectbox("Select category", sorted_columns)
 threshold = st.sidebar.slider("Select threshold", min_value=0.0, max_value=1.0, 
                               value=0.8, step=0.01)
