@@ -19,6 +19,19 @@ st.markdown("""
             Moreover, the authors disclaim all responsibility and liability for any actions, results, or interpretations arising from the use or application of any information contained herein.
             """)
 
+
+st.write("## Images Insights") 
+
+
+st.markdown(
+    """
+
+    In order to analyse the data, OpenAI's CLIP model, a powerful tool for image classification, has been employed to categorise each image regarding specific categories. To enhance browsing the material, you can filter the images by both categories and classification scores. 
+    
+    Furthermore, you can filter some of the images based on date and time as well camera make and model information.
+
+    """)
+
 with st.expander("Click here for more information on both the model and classification process."):
     clip_text = """
     <p> 
@@ -64,19 +77,6 @@ with st.expander("Click here for more information on both the model and classifi
 
 """
     st.markdown(clip_text, unsafe_allow_html=True)
-
-
-st.write("## Images Insights") 
-
-
-st.markdown(
-    """
-
-    In order to analyse the data, OpenAI's CLIP model, a powerful tool for image classification, has been employed to categorise each image regarding specific categories. To enhance browsing the material, you can filter the images by both categories and classification scores. 
-    
-    Furthermore, you can filter some of the images based on date and time as well camera make and model information.
-
-    """)
 
 st.write("## Demo Video Insights") 
 
